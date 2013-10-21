@@ -1,6 +1,6 @@
 {
 	"name": "ChopUrHand",
-	"version": "1.0.1",
+	"version": "1.1.0",
 	"description": "Inhibition of visit some webpages in certain time.",
 	"icons": { 
 		"48": "icon.png",
