@@ -1,0 +1,23 @@
+{
+	"name": "ChopUrHand",
+	"version": "1.0.1",
+	"description": "Inhibition of visit some webpages in certain time.",
+	"icons": { 
+		"48": "icon.png",
+		"128": "icon.png"
+	},
+
+	"page_action": {
+		"default_icon": "icon.png",
+		"default_title": "ChopUrHand"
+	},
+	"background": { "scripts": ["background.js"] },
+
+	"permissions": [
+		"http://*/*",
+		"tabs"
+	],
+
+	"manifest_version": 2
+}
+	
