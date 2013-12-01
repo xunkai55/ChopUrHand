@@ -11,7 +11,7 @@ var banHTML = chrome.extension.getURL("ban.html");
 
 function checkUrl(tabId, changeInfo, tab) {
 	// check if it's not the ban time
-	if (hh < 1 || hh >= 22 || (hh < 8 && hh >= 6))
+	if (hh < 1 || hh >= 22 || (hh < 7 && hh >= 6))
 	{
 		return;
 	}
