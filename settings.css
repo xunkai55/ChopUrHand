@@ -1,0 +1,25 @@
+body {
+	font: 14px/24px Arial, Helvetica, sans-serif; 
+	color: #000;
+}
+
+input {
+	border: #999 1px solid; 
+	height: 20px; 
+	width: 300px;
+}
+
+label {
+	text-align: right; 
+	float: left; 
+	width: 400px;
+	margin-right: 5px;
+}
+
+.sub {
+	margin-left: 250px;
+}
+
+.int {
+	margin: 5px auto;
+}
