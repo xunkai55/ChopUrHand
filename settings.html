@@ -5,8 +5,6 @@
 			CHOP YOUR HANDS!!
 		</title>
 		<link rel="stylesheet" type="text/css" href="settings.css"/>
-		<script type="text/javascript" src="settings.js">
-		</script>
 	</head>
 	<body>
 		<h1>
@@ -16,7 +14,7 @@
 		<h3>
 			<p>当前禁令</p>
 		</h3>
-		<div id="list">
+		<div id="banlist">
 		</div>
 		<hr/>
 		<h3>
@@ -35,12 +33,14 @@
 			<br/>
 			<div class="int">
 				<label for="each">每天允许访问的单次最大时长 (分钟): </label>
-				<input type="text" name="each" />
+				<input type="text" id="each" />
 			</div>
 			<br/>
 			<div class="sub">
-				<input type="button" name="submit" value="提交" onclick="ohayo()" />
+				<input type="button" id="addnow" value="提交" />
 			</div>
 		</div>
+		<script type="text/javascript" src="settings.js">
+		</script>
 	</body>
 </html>
