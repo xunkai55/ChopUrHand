@@ -5,27 +5,32 @@ chrome.browserAction.onClicked.addListener(function(tab) {
     chrome.tabs.create({url: setHTML});
 });    
 
-var dateTime = new Date();
-var hh = dateTime.getHours();
-var mm = dateTime.getMinutes();
+var banHTML = chrome.extension.getURL("red.html");
 
-var banHTML = chrome.extension.getURL("ban.html");
-alert(banHTML);
+var banList = [
+    "renren.com/353173410",
+    "weibo.com",
+    "hupu.com"
+];
 
 function checkUrl(tabId, changeInfo, tab) {
     
     if (!changeInfo.url) {
         return;
     }
-    var cnt;
-    if (!localStorage.hasOwnProperty('cnt')) {
-        cnt = 0;
+
+    var dateTime = new Date();
+    var hh = dateTime.getHours();
+    if (hh >= 22 || (hh < 7 && hh >= 6)) {
+        return;
     }
-    else {
-        cnt = parseInt(localStorage.cnt);
+
+    for (var i = 0; i < banList.length; i++)
+    {
+        if (banList[i].test(tab.url)) {
+            chrome.tab.update(tabId, {"url" : banHTML});
+        }
     }
-    cnt = cnt + 1;
-    localStorage.cnt = cnt;
 };
 /*
 function add() {
