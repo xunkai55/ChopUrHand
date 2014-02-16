@@ -21,8 +21,8 @@ var isBanned = true;
 var permitGap = 600000;
 var permitLong = 600000;
 
-//var permitGap = 20000;
-//var permitLong = 2000;
+//var permitGap = 5000;
+//var permitLong = 5000;
 
 function checkUrl(tabId, tab) {
     
@@ -65,6 +65,9 @@ function reset() {
     chrome.browserAction.setIcon({"path" : "icon.png"});
     isBanned = true;
     chrome.tabs.query({}, checkTabs);
+    var tnow = new Date();
+    lastPermit.setTime(tnow.getTime());
+    alert(lastPermit.getTime());
 }
 
 function checkTabs(tabArr) {
@@ -79,16 +82,16 @@ function permit(tab) {
     if (!isBanned) {
         return;
     }
-    now = new Date();
+    var now = new Date();
     if (now.getTime() - lastPermit.getTime() < permitGap) {
         alert ("CHOP!YOUR!HAND!");
         return;
     }
-    lastPermit.setTime(now.getTime());
     chrome.browserAction.setIcon({"path" : "icon-disabled.png"});
     isBanned = false;
     var timer = setTimeout(reset, permitLong);
     alert("Now you have a 10 min break");
+    alert(lastPermit.getTime());
 }
 
 chrome.tabs.onUpdated.addListener(checkNewTab);
