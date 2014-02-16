@@ -8,7 +8,6 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 */
 
 var banHTML = chrome.extension.getURL("red.html");
-alert(banHTML);
 
 var banList = [
     "renren.com/353173410",
@@ -16,8 +15,33 @@ var banList = [
     "hupu.com"
 ];
 
-function checkUrl(tabId, changeInfo, tab) {
+var lastPermit = new Date();
+lastPermit.setFullYear(1994);
+var isBanned = true;
+var permitGap = 600000;
+var permitLong = 600000;
+
+//var permitGap = 20000;
+//var permitLong = 2000;
+
+function checkUrl(tabId, tab) {
     
+    for (var i = 0; i < banList.length; i++)
+    {
+        if (tab.url.indexOf(banList[i]) >= 0) {
+            chrome.tabs.update(tabId, {"url" : banHTML});
+            return;
+        }
+    }
+
+};
+
+function checkNewTab(tabId, changeInfo, tab) {
+
+    if (!isBanned) {
+        return;
+    }
+
     if (!changeInfo.url) {
         return;
     }
@@ -28,13 +52,44 @@ function checkUrl(tabId, changeInfo, tab) {
         return;
     }
 
-    for (var i = 0; i < banList.length; i++)
-    {
-        if (tab.url.indexOf(banList[i]) >= 0) {
-            chrome.tabs.update(tabId, {"url" : banHTML});
-            return;
-        }
-    }
-};
+    checkUrl(tabId, tab);
 
-chrome.tabs.onUpdated.addListener(checkUrl);
+}
+
+function reset() {
+
+    if (isBanned) {
+        return;
+    }
+    alert ("Time is up");
+    chrome.browserAction.setIcon({"path" : "icon.png"});
+    isBanned = true;
+    chrome.tabs.query({}, checkTabs);
+}
+
+function checkTabs(tabArr) {
+    for (var i = 0; i < tabArr.length; i++)
+    {
+        checkUrl(tabArr[i].id, tabArr[i]);
+    }
+}
+
+function permit(tab) {
+
+    if (!isBanned) {
+        return;
+    }
+    now = new Date();
+    if (now.getTime() - lastPermit.getTime() < permitGap) {
+        alert ("CHOP!YOUR!HAND!");
+        return;
+    }
+    lastPermit.setTime(now.getTime());
+    chrome.browserAction.setIcon({"path" : "icon-disabled.png"});
+    isBanned = false;
+    var timer = setTimeout(reset, permitLong);
+    alert("Now you have a 10 min break");
+}
+
+chrome.tabs.onUpdated.addListener(checkNewTab);
+chrome.browserAction.onClicked.addListener(permit);
