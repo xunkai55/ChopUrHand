@@ -67,7 +67,6 @@ function reset() {
     chrome.tabs.query({}, checkTabs);
     var tnow = new Date();
     lastPermit.setTime(tnow.getTime());
-    alert(lastPermit.getTime());
 }
 
 function checkTabs(tabArr) {
@@ -91,7 +90,6 @@ function permit(tab) {
     isBanned = false;
     var timer = setTimeout(reset, permitLong);
     alert("Now you have a 10 min break");
-    alert(lastPermit.getTime());
 }
 
 chrome.tabs.onUpdated.addListener(checkNewTab);
