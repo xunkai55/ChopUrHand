@@ -18,7 +18,7 @@ var banList = [
 var lastPermit = new Date();
 lastPermit.setFullYear(1994);
 var isBanned = true;
-var permitGap = 600000;
+var permitGap = 1200000;
 var permitLong = 600000;
 
 //var permitGap = 5000;
