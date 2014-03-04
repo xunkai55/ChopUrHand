@@ -20,6 +20,7 @@ lastPermit.setFullYear(1994);
 var isBanned = true;
 var permitGap = 1200000;
 var permitLong = 600000;
+var lastLong = 60000;
 
 //var permitGap = 5000;
 //var permitLong = 5000;
@@ -61,12 +62,18 @@ function reset() {
     if (isBanned) {
         return;
     }
-    alert ("Time is up");
+    alert("Time is up");
     chrome.browserAction.setIcon({"path" : "icon.png"});
     isBanned = true;
     chrome.tabs.query({}, checkTabs);
     var tnow = new Date();
     lastPermit.setTime(tnow.getTime());
+}
+
+function reset_alert() {
+
+    alert("Last 60 seconds");
+    var timerx = setTimeout(reset, lastLong);
 }
 
 function checkTabs(tabArr) {
@@ -88,7 +95,7 @@ function permit(tab) {
     }
     chrome.browserAction.setIcon({"path" : "icon-disabled.png"});
     isBanned = false;
-    var timer = setTimeout(reset, permitLong);
+    var timer = setTimeout(reset_alert, permitLong - lastLong);
     alert("Now you have a 10 min break");
 }
 
