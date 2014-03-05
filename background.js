@@ -72,8 +72,8 @@ function reset() {
 
 function reset_alert() {
 
-    alert("Last 60 seconds");
     var timerx = setTimeout(reset, lastLong);
+    alert("Last 60 seconds");
 }
 
 function checkTabs(tabArr) {
