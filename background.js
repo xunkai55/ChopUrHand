@@ -62,12 +62,12 @@ function reset() {
     if (isBanned) {
         return;
     }
-    alert("Time is up");
     chrome.browserAction.setIcon({"path" : "icon.png"});
     isBanned = true;
     chrome.tabs.query({}, checkTabs);
     var tnow = new Date();
     lastPermit.setTime(tnow.getTime());
+    alert("Time is up");
 }
 
 function reset_alert() {
