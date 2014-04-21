@@ -67,7 +67,7 @@ function reset() {
     chrome.tabs.query({}, checkTabs);
     var tnow = new Date();
     lastPermit.setTime(tnow.getTime());
-    alert("Time is up");
+    //alert("Time is up");
 }
 
 function reset_alert() {
@@ -88,14 +88,14 @@ function permit(tab) {
         return;
     }
     var now = new Date();
-    if (now.getTime() - lastPermit.getTime() < permitGap) {
-        alert ("CHOP!YOUR!HAND!");
+    var gap = now.getTime() - lastPermit.getTime();
+    if (gap < permitGap) {
+        alert("CHOP!YOUR!HAND! (" + (Math.floor((permitGap - gap) / 60000)).toString() + " min)");
         return;
     }
     chrome.browserAction.setIcon({"path" : "icon-disabled.png"});
     isBanned = false;
     var timer = setTimeout(reset_alert, permitLong - lastLong);
-    alert("Now you have a 15 min break");
 }
 
 chrome.tabs.onUpdated.addListener(checkNewTab);
