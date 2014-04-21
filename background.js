@@ -18,8 +18,8 @@ var banList = [
 var lastPermit = new Date();
 lastPermit.setFullYear(1994);
 var isBanned = true;
-var permitGap = 1200000;
-var permitLong = 600000;
+var permitGap = 135 * 60000;
+var permitLong = 15 * 60000;
 var lastLong = 60000;
 
 //var permitGap = 5000;
@@ -49,9 +49,9 @@ function checkNewTab(tabId, changeInfo, tab) {
 
     var dateTime = new Date();
     var hh = dateTime.getHours();
-    if (hh >= 22 || hh < 7) {
+    /*if (hh >= 22 || hh < 7) {
         return;
-    }
+    }*/
 
     checkUrl(tabId, tab);
 
@@ -73,7 +73,6 @@ function reset() {
 function reset_alert() {
 
     var timerx = setTimeout(reset, lastLong);
-    alert("Last 60 seconds");
 }
 
 function checkTabs(tabArr) {
@@ -96,7 +95,7 @@ function permit(tab) {
     chrome.browserAction.setIcon({"path" : "icon-disabled.png"});
     isBanned = false;
     var timer = setTimeout(reset_alert, permitLong - lastLong);
-    alert("Now you have a 10 min break");
+    alert("Now you have a 15 min break");
 }
 
 chrome.tabs.onUpdated.addListener(checkNewTab);
