@@ -1,6 +1,6 @@
 {
 	"name": "ChopUrHand",
-	"version": "2.0.3",
+	"version": "3.0.0",
 	"description": "Inhibition of visit some webpages in certain time.",
 	"icons": { 
 		"48": "icon.png",
@@ -15,7 +15,8 @@
 
 	"permissions": [
 		"http://*/*",
-		"tabs"
+		"tabs",
+		"alarms"
 	],
 
 	"manifest_version": 2

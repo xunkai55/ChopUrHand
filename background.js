@@ -10,20 +10,26 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 var banHTML = chrome.extension.getURL("red.html");
 
 var banList = [
-    "renren.com/353173410",
+    "renren.com",
     "weibo.com",
-    "hupu.com"
+    "hupu.com",
+    "zhihu.com"
 ];
 
-var lastPermit = new Date();
-lastPermit.setFullYear(1994);
-var isBanned = true;
-var permitGap = 135 * 60000;
-var permitLong = 15 * 60000;
-var lastLong = 60000;
-
-//var permitGap = 5000;
-//var permitLong = 5000;
+isBanned = true;
+var date = new Date();
+date.setHours(23);
+date.setMinutes(0);
+chrome.alarms.create("a1", {when: date.getMilliseconds(), periodInMinutes: 3600 * 24});
+date.setHours(1);
+chrome.alarms.create("a2", {when: date.getMilliseconds(), periodInMinutes: 3600 * 24});
+chrome.alarms.onAlarm.addListener(function (alarm) {
+    if (alarm.name == "a1") {
+        reset();
+    } else {
+        permit();
+    }
+});
 
 function checkUrl(tabId, tab) {
     
@@ -34,8 +40,7 @@ function checkUrl(tabId, tab) {
             return;
         }
     }
-
-};
+}
 
 function checkNewTab(tabId, changeInfo, tab) {
 
@@ -49,30 +54,18 @@ function checkNewTab(tabId, changeInfo, tab) {
 
     var dateTime = new Date();
     var hh = dateTime.getHours();
-    /*if (hh >= 22 || hh < 7) {
+    if (hh >= 23 || hh < 1) {
         return;
-    }*/
+    }
 
     checkUrl(tabId, tab);
-
 }
 
 function reset() {
-
-    if (isBanned) {
-        return;
-    }
     chrome.browserAction.setIcon({"path" : "icon.png"});
     isBanned = true;
     chrome.tabs.query({}, checkTabs);
-    var tnow = new Date();
-    lastPermit.setTime(tnow.getTime());
     //alert("Time is up");
-}
-
-function reset_alert() {
-
-    var timerx = setTimeout(reset, lastLong);
 }
 
 function checkTabs(tabArr) {
@@ -82,21 +75,11 @@ function checkTabs(tabArr) {
     }
 }
 
-function permit(tab) {
-
-    if (!isBanned) {
-        return;
-    }
-    var now = new Date();
-    var gap = now.getTime() - lastPermit.getTime();
-    if (gap < permitGap) {
-        alert("CHOP!YOUR!HAND! (" + (Math.floor((permitGap - gap) / 60000)).toString() + " min)");
-        return;
-    }
+function permit() {
     chrome.browserAction.setIcon({"path" : "icon-disabled.png"});
     isBanned = false;
-    var timer = setTimeout(reset_alert, permitLong - lastLong);
 }
 
 chrome.tabs.onUpdated.addListener(checkNewTab);
-chrome.browserAction.onClicked.addListener(permit);
+reset();
+
