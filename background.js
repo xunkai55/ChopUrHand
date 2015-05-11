@@ -21,7 +21,7 @@ isBanned = true;
 var date = new Date();
 var now = new Date();
 var h = date.getHours();
-if (h >= 23 || h < 1) {
+if (h >= 23 || h < 0) {
     pauseChopper();
 } else {
     resetChopper();
@@ -33,7 +33,7 @@ if (date < now) {
 }
 chrome.alarms.create("a1", {when: date.getTime(), periodInMinutes: 60 * 24});
 date = new Date();
-date.setHours(1);
+date.setHours(0);
 date.setMinutes(0);
 if (date < now) {
     date.setTime(date.getTime() + 3600 * 24 * 1000);
