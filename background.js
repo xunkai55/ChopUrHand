@@ -13,7 +13,8 @@ var banList = [
     "renren.com",
     "weibo.com",
     "hupu.com",
-    "zhihu.com"
+    "zhihu.com",
+    "agar.io"
 ];
 
 isBanned = true;
@@ -65,7 +66,6 @@ function reset() {
     chrome.browserAction.setIcon({"path" : "icon.png"});
     isBanned = true;
     chrome.tabs.query({}, checkTabs);
-    //alert("Time is up");
 }
 
 function checkTabs(tabArr) {
