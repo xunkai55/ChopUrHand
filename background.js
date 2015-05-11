@@ -28,21 +28,18 @@ if (h >= 23 || h < 1) {
 }
 date.setHours(23);
 date.setMinutes(0);
-if (date < now()) {
+if (date < now) {
     date.setTime(date.getTime() + 3600 * 24 * 1000);
 }
-alert(date.getTime());
 chrome.alarms.create("a1", {when: date.getTime(), periodInMinutes: 60 * 24});
 date = new Date();
 date.setHours(1);
 date.setMinutes(0);
-if (date < now()) {
+if (date < now) {
     date.setTime(date.getTime() + 3600 * 24 * 1000);
 }
-alert(date.getTime());
 chrome.alarms.create("a2", {when: date.getTime(), periodInMinutes: 60 * 24});
 chrome.alarms.onAlarm.addListener(function (alarm) {
-    alert(alarm.name);
     if (alarm.name == "a1") {
         resetChopper();
     } else {
